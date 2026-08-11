@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#070713">
+  <meta name="description" content="写下 Offer 愿望，转动星辰转盘，领取你的 Offer 星辰签。">
+  <title>Offer降临｜向流星许下秋招愿望</title>
+  <style>:root { --ink:#f6f2ff; --muted:#a7a0c2; --gold:#f2cc72; --gold2:#fff0b6; --violet:#8f6dff; --deep:#070713; }
+* { box-sizing:border-box; }
+html { background:var(--deep); }
+body { margin:0; color:var(--ink); background:var(--deep); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif; overflow-x:hidden; }
+button,textarea { font:inherit; }
+button { -webkit-tap-highlight-color:transparent; }
+.app { min-height:100svh; position:relative; overflow:hidden; isolation:isolate; background:radial-gradient(circle at 50% 12%,rgba(74,48,130,.28),transparent 37%),linear-gradient(180deg,#090817 0%,#05050d 76%,#090817 100%); }
+.sky,.grain { position:fixed; inset:0; pointer-events:none; }
+.sky { z-index:-3; overflow:hidden; transition:filter 1s,opacity 1s; }
+.stage-wishing .sky { filter:brightness(1.5); }
+.grain { z-index:9; opacity:.18; background-image:radial-gradient(circle at 15% 31%,rgba(255,255,255,.09) 0 1px,transparent 1.5px),radial-gradient(circle at 72% 61%,rgba(255,255,255,.055) 0 1px,transparent 1.5px);background-size:17px 19px,23px 29px;mix-blend-mode:soft-light; }
+.nebula { position:absolute; width:480px; height:480px; border-radius:50%; filter:blur(70px); opacity:.13; }
+.nebula-one { background:#6730a8; top:-180px; left:-210px; }
+.nebula-two { background:#214ba5; right:-280px; top:26%; }
+.star { position:absolute; display:block; border-radius:50%; background:#fff; box-shadow:0 0 7px #c9c4ff; animation:twinkle 3s ease-in-out infinite alternate; }
+@keyframes twinkle { 0%{opacity:.18;transform:scale(.7)} 55%{opacity:.9;transform:scale(1.15)} 100%{opacity:.28;transform:scale(.8)} }
+.meteor { position:absolute; display:block; width:120px; height:1px; background:linear-gradient(90deg,transparent,#dad4ff 75%,#fff); filter:drop-shadow(0 0 4px #8b6df9); opacity:0; transform:rotate(-28deg); animation:meteor 8s linear infinite; }
+.meteor::after { content:""; position:absolute; right:-2px; top:-2px; width:5px; height:5px; background:#fff; border-radius:50%; box-shadow:0 0 12px 3px #ad97ff; }
+.meteor-one { top:15%; left:-25%; }
+.meteor-two { top:42%; left:-35%; animation-delay:3.7s; animation-duration:10s; }
+.meteor-three { top:24%; right:-20%; transform:scaleX(-1) rotate(-20deg); animation:meteorReverse 11s linear 1.8s infinite; }
+@keyframes meteor { 0%,72%{opacity:0;translate:0 0} 74%{opacity:1} 90%,100%{opacity:0;translate:145vw 78vw} }
+@keyframes meteorReverse { 0%,76%{opacity:0;translate:0 0} 78%{opacity:.8} 92%,100%{opacity:0;translate:-135vw 65vw} }
+.brandbar { height:66px; padding:max(18px,env(safe-area-inset-top)) 22px 0; display:flex; align-items:flex-start; gap:9px; color:#b3acca; letter-spacing:.18em; font:600 10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; position:relative; z-index:10; }
+.brand-mark { color:var(--gold); font-size:16px; line-height:9px; filter:drop-shadow(0 0 6px var(--gold)); }
+.signal { margin-left:auto; display:flex; gap:3px; align-items:center; }
+.signal i { width:3px; height:8px; background:var(--gold); border-radius:2px; opacity:.35; animation:signal 1.2s infinite alternate; }
+.signal i:nth-child(2){height:12px;animation-delay:.2s}.signal i:nth-child(3){height:16px;animation-delay:.4s}
+@keyframes signal { to{opacity:1;box-shadow:0 0 6px var(--gold)} }
+.screen { width:min(100%,480px); min-height:calc(100svh - 156px); margin:0 auto; padding:18px 22px 34px; display:none; flex-direction:column; align-items:center; justify-content:center; position:relative; z-index:2; }
+.screen.active { display:flex; animation:screenIn .7s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes screenIn { from{opacity:0;transform:translateY(14px) scale(.985)} to{opacity:1;transform:none} }
+.eyebrow { color:var(--gold); letter-spacing:.23em; font:600 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace; margin:0 0 12px; text-align:center; }
+.hero-orbit { width:110px; height:110px; border:1px solid rgba(180,155,255,.23); border-radius:50%; margin-bottom:10px; position:relative; display:grid; place-items:center; box-shadow:inset 0 0 30px rgba(127,83,217,.13),0 0 40px rgba(125,82,216,.09); }
+.hero-orbit::before,.hero-orbit::after { content:""; position:absolute; border:1px solid rgba(241,204,114,.24); border-radius:50%; transform:rotate(-32deg); }
+.hero-orbit::before { width:145px;height:55px }.hero-orbit::after { width:55px;height:145px;border-color:rgba(156,131,225,.14) }
+.hero-orbit span { font-size:42px; filter:drop-shadow(0 0 17px rgba(177,142,255,.8)); animation:float 3.4s ease-in-out infinite; }
+.hero-orbit i { position:absolute;width:5px;height:5px;background:var(--gold);border-radius:50%;top:49px;left:-20px;box-shadow:0 0 9px var(--gold);animation:orbiter 7s linear infinite;transform-origin:75px 5px }
+@keyframes orbiter { to{transform:rotate(360deg)} } @keyframes float{50%{transform:translateY(-7px) rotate(-3deg)}}
+.welcome-screen h1 { margin:0; font-family:Georgia,"Songti SC","STSong","SimSun",serif; font-size:clamp(44px,13vw,62px); letter-spacing:-.04em; line-height:1.04; font-weight:600; }
+.welcome-screen h1 span { font-style:italic; font-weight:500; color:var(--gold2); text-shadow:0 0 25px rgba(243,205,114,.25); }
+.subtitle { margin:12px 0 28px; color:#c9c2db; font-size:15px; letter-spacing:.08em; }
+.wish-card { width:100%; border:1px solid rgba(178,153,255,.24); background:linear-gradient(145deg,rgba(32,25,61,.78),rgba(12,12,28,.82)); border-radius:18px; padding:17px 17px 12px; box-shadow:0 18px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.04); backdrop-filter:blur(16px); position:relative; }
+.wish-card::after { content:""; position:absolute; width:6px;height:6px;border-top:1px solid var(--gold);border-left:1px solid var(--gold);left:-1px;top:-1px; }
+.wish-card label { display:block; color:var(--gold2); font-size:11px; letter-spacing:.12em; margin-bottom:11px; }
+.wish-card textarea { display:block; width:100%; color:#fff; background:transparent; border:0; outline:0; resize:none; line-height:1.75; font-size:15px; min-height:80px; }
+.wish-card textarea::placeholder { color:#716b84; }
+.input-meta { border-top:1px solid rgba(255,255,255,.07); padding-top:9px; display:flex; justify-content:space-between; color:#716b84; font:10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace; }
+.input-meta span:first-child { color:#7cad93; }.input-meta i,.tiny-note i { display:inline-block;width:5px;height:5px;border-radius:50%;background:#63cf90;box-shadow:0 0 7px #63cf90;margin-right:5px; }
+.primary-button,.secondary-button { min-height:54px; border-radius:14px; cursor:pointer; border:0; font-weight:700; transition:transform .2s,filter .2s; }
+.primary-button { width:100%; margin-top:16px; padding:0 19px; color:#20132e; background:linear-gradient(110deg,#d5a94f,#ffe7a2 48%,#d7ab53); box-shadow:0 11px 34px rgba(213,169,79,.19),inset 0 1px rgba(255,255,255,.6); display:flex; align-items:center; justify-content:center; gap:9px; }
+.primary-button span { font-size:18px; }.primary-button b { margin-left:auto;font-size:20px;font-weight:400 }.primary-button span:first-child { margin-left:auto; }
+.primary-button:active,.secondary-button:active { transform:scale(.975); }
+.primary-button:disabled { cursor:wait;filter:saturate(.55); }
+.tiny-note,.screenshot-tip { margin:15px 0 0;color:#777188;font-size:10px;letter-spacing:.06em;text-align:center }.tiny-note i { background:#66547f;box-shadow:none }
+.wishing-screen { justify-content:center; }
+.wish-visual { width:100%; min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.wish-rings { width:136px;height:136px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle,rgba(239,206,125,.15),transparent 57%); }
+.wish-rings i { position:absolute;inset:0;border:1px solid rgba(215,187,255,.35);border-radius:50%;animation:ripple 2.5s ease-out infinite }.wish-rings i:nth-child(2){animation-delay:.8s}.wish-rings i:nth-child(3){animation-delay:1.6s}.wish-rings span { color:var(--gold2);font-size:36px;filter:drop-shadow(0 0 14px var(--gold));animation:pulse 1.3s ease-in-out infinite alternate }
+@keyframes ripple{from{transform:scale(.35);opacity:0}30%{opacity:.8}to{transform:scale(1.65);opacity:0}} @keyframes pulse{to{transform:scale(1.2) rotate(15deg)}}
+.floating-wish { max-width:330px;margin:45px 0 0;color:#e4ddf3;text-align:center;line-height:1.8;font-family:Georgia,"Songti SC",serif;font-size:17px;text-shadow:0 0 20px #8d6cbe;animation:float 3s ease-in-out infinite; }
+.loading-copy { width:100%;text-align:center;animation:copyIn .5s both }.step-index { color:#75688f;font:10px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.15em }.loading-copy h2 { font-size:16px;margin:12px 0 18px;font-weight:500 }.progress { width:100%;height:2px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden }.progress i { display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--gold));transition:width .6s;box-shadow:0 0 10px var(--gold) }
+@keyframes copyIn{from{opacity:0;transform:translateY(6px)}}
+.wheel-screen { justify-content:flex-start;padding-top:24px }.wheel-screen h2,.result-screen>h2 { margin:0;font-size:31px;letter-spacing:.01em }.wheel-screen h2 span { color:var(--gold2);font-family:Georgia,"Songti SC",serif;font-weight:500 }.section-subtitle { margin:8px 0 15px;color:#8e86a2;font-size:11px;letter-spacing:.15em }
+.wheel-wrap { width:min(85vw,390px);aspect-ratio:1;position:relative;margin:2px auto 3px;display:grid;place-items:center;filter:drop-shadow(0 24px 50px rgba(0,0,0,.42)); }
+.wheel-wrap::before,.wheel-wrap::after { content:"";position:absolute;border-radius:50%;pointer-events:none }.wheel-wrap::before{inset:-4px;border:1px solid rgba(243,206,114,.52);box-shadow:0 0 24px rgba(150,110,255,.3),inset 0 0 16px rgba(150,110,255,.24)}.wheel-wrap::after{inset:5px;border:1px dotted rgba(255,232,162,.35)}
+.wheel { width:100%;height:100%;will-change:transform }.wheel-canvas { display:block;width:100%;height:100% }.pointer { z-index:5;position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:35px;height:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5)); }.pointer::before { content:"";position:absolute;left:4px;right:4px;top:0;height:32px;background:linear-gradient(135deg,#fff3bd,#cd9740);clip-path:polygon(50% 100%,0 0,100% 0); }.pointer i { position:absolute;left:50%;top:-2px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:#fff3bd;box-shadow:0 0 13px var(--gold) }
+.spin-button { max-width:390px;margin-top:12px }.is-spinning .sparkles { opacity:1 }
+.sparkles { position:absolute;inset:-25px;pointer-events:none;opacity:.28;transition:opacity .3s }.sparkles i { --angle:calc(var(--i) * 25.714deg);position:absolute;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:var(--gold2);box-shadow:0 0 8px var(--gold);transform:rotate(var(--angle)) translateY(-48vw);animation:spark 1.9s calc(var(--i) * -0.12s) ease-in-out infinite; }.sparkles i:nth-child(3n){background:#b49cff}.sparkles i:nth-child(4n){width:2px;height:9px;border-radius:2px}
+@keyframes spark{0%,100%{opacity:.1;scale:.5}45%{opacity:1;scale:1.5}}
+.result-screen { justify-content:flex-start;padding-top:24px }.result-screen>h2 { font-family:Georgia,"Songti SC",serif;font-weight:500;font-size:28px;margin-bottom:19px }.result-card { width:100%;padding:26px 20px 20px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(240,207,124,.42);background:radial-gradient(circle at 50% 12%,rgba(112,76,173,.36),transparent 35%),linear-gradient(160deg,rgba(31,24,59,.97),rgba(10,10,25,.97));box-shadow:0 22px 80px rgba(0,0,0,.35),inset 0 0 40px rgba(132,90,203,.08) }
+.result-card::before { content:"";position:absolute;inset:7px;border:1px solid rgba(255,255,255,.06);pointer-events:none }.card-corners i { position:absolute;width:13px;height:13px;border-color:var(--gold);opacity:.7 }.card-corners i:nth-child(1){left:6px;top:6px;border-left:1px solid;border-top:1px solid}.card-corners i:nth-child(2){right:6px;top:6px;border-right:1px solid;border-top:1px solid}.card-corners i:nth-child(3){left:6px;bottom:6px;border-left:1px solid;border-bottom:1px solid}.card-corners i:nth-child(4){right:6px;bottom:6px;border-right:1px solid;border-bottom:1px solid}
+.result-label { color:#837b98;font:9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.23em;margin:0 0 12px }.constellation { height:48px;width:130px;position:relative;margin:0 auto 5px;background:linear-gradient(25deg,transparent 47%,rgba(200,179,255,.28) 48%,rgba(200,179,255,.28) 49%,transparent 50%) }.constellation i{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff2ba;box-shadow:0 0 9px var(--gold)}.constellation i:nth-child(1){left:3px;bottom:7px}.constellation i:nth-child(2){left:35px;top:9px}.constellation i:nth-child(3){left:67px;bottom:12px}.constellation i:nth-child(4){right:29px;top:5px}.constellation i:nth-child(5){right:2px;bottom:4px}
+.result-card h3 { margin:5px 0 13px;font-size:clamp(38px,12vw,54px);letter-spacing:-.06em;color:var(--gold2);font-family:Georgia,"Songti SC",serif;font-weight:600;text-shadow:0 0 28px rgba(241,204,114,.24) }.divider { display:flex;align-items:center;gap:10px;color:var(--gold);margin:0 20px 15px }.divider::before,.divider::after { content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,rgba(242,204,114,.37)) }.divider::after { transform:scaleX(-1) }.blessing { margin:0;line-height:1.8;color:#d7d0e5;font-size:14px }.blessing span { display:block }.wish-memory { margin:17px auto 0;padding:10px 12px;max-width:95%;color:#8f879f;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);font-size:10px;line-height:1.5 }.lucky-code { margin-top:12px;color:#655d75;font:9px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em }
+.result-actions { width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px }.result-actions .primary-button { margin:0 }.secondary-button { color:#c9c1db;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12);padding:0 12px }.result-screen>.burst { position:fixed;inset:0;z-index:-1;opacity:1 }.burst i { transform:rotate(var(--angle)) translateY(-46vh);animation:burst 2.4s calc(var(--i) * -.06s) ease-out infinite }.burst i:nth-child(n+15){transform:rotate(var(--angle)) translateY(-35vh)} @keyframes burst{0%{opacity:0;scale:.2}40%{opacity:1}100%{opacity:0;scale:1.3}}
+.terminal-egg { width:min(calc(100% - 44px),436px);margin:0 auto max(22px,env(safe-area-inset-bottom));position:relative;z-index:2;border:1px solid rgba(255,255,255,.06);background:rgba(4,5,12,.72);border-radius:10px;overflow:hidden;color:#696477 }.terminal-egg>div { padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:5px;align-items:center }.terminal-egg>div i { width:6px;height:6px;border-radius:50%;background:#6b4450 }.terminal-egg>div i:nth-child(2){background:#6e6847}.terminal-egg>div i:nth-child(3){background:#436650}.terminal-egg>div span { margin-left:5px;font:8px ui-monospace,SFMono-Regular,Menlo,monospace;color:#5f5a6c }.terminal-egg pre { margin:0;padding:10px 13px 12px;font:9px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap }.terminal-egg b { color:#787285;font-weight:400 }.terminal-egg em { color:#6c977b;font-style:normal }.stage-wishing .terminal-egg,.stage-wheel .terminal-egg { opacity:.45 }
+.toast { position:fixed;z-index:20;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);padding:10px 15px;background:rgba(28,23,47,.94);border:1px solid rgba(242,204,114,.28);color:#eee7ff;border-radius:999px;font-size:12px;white-space:nowrap;box-shadow:0 10px 35px #000;animation:toastIn .25s both } @keyframes toastIn{from{opacity:0;translate:0 8px}}
+@media (min-width:700px){.screen{padding-top:32px}.app::before,.app::after{content:"";position:fixed;top:90px;bottom:80px;width:1px;background:linear-gradient(transparent,rgba(184,156,255,.12),transparent)}.app::before{left:calc(50% - 280px)}.app::after{right:calc(50% - 280px)}}
+@media (max-height:720px){.hero-orbit{width:82px;height:82px;margin-bottom:5px}.hero-orbit::before{width:110px;height:44px}.hero-orbit::after{width:44px;height:110px}.hero-orbit i{top:38px;transform-origin:59px 5px}.subtitle{margin-bottom:18px}.screen{padding-top:2px}.wheel-wrap{width:min(72vw,330px)}.terminal-egg{margin-top:4px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="app stage-welcome" id="app">
+  <div class="sky" id="sky" aria-hidden="true">
+    <div class="nebula nebula-one"></div><div class="nebula nebula-two"></div>
+    <i class="meteor meteor-one"></i><i class="meteor meteor-two"></i><i class="meteor meteor-three"></i>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="brandbar"><span class="brand-mark">✦</span><span>OFFER ARRIVAL</span><span class="signal"><i></i><i></i><i></i></span></header>
+
+  <section class="screen welcome-screen active" id="welcome-screen">
+    <div class="hero-orbit" aria-hidden="true"><i></i><span>🌠</span></div>
+    <p class="eyebrow">METEOR WISHING PROTOCOL</p>
+    <h1><span>Offer</span> 降临</h1>
+    <p class="subtitle">今夜，许下你的 Offer 愿望</p>
+    <div class="wish-card">
+      <label for="wish">写给星辰的悄悄话</label>
+      <textarea id="wish" maxlength="80" placeholder="写下你的 Offer 愿望...&#10;例如：希望秋招顺利，拿到心仪 Offer" rows="3"></textarea>
+      <div class="input-meta"><span><i></i> 通道已连接</span><span id="counter">0/80</span></div>
+    </div>
+    <button class="primary-button" id="wish-button"><span>✦</span> 向流星许愿 <b>→</b></button>
+    <p class="tiny-note"><i></i> 今晚的愿望，将被星辰温柔保管</p>
+  </section>
+
+  <section class="screen wishing-screen" id="wishing-screen" aria-hidden="true">
+    <div class="wish-visual">
+      <div class="wish-rings"><i></i><i></i><i></i><span>✦</span></div>
+      <p class="floating-wish" id="floating-wish"></p>
+    </div>
+    <div class="loading-copy" id="loading-copy">
+      <span class="step-index" id="step-index">01 / 03</span>
+      <h2 id="loading-text">正在发送你的愿望...</h2>
+      <div class="progress"><i id="progress-bar" style="width:33.34%"></i></div>
+    </div>
+  </section>
+
+  <section class="screen wheel-screen" id="wheel-screen" aria-hidden="true">
+    <p class="eyebrow">STELLAR CAREER LOTTERY</p>
+    <h2>OFFER <span>大满贯</span></h2>
+    <p class="section-subtitle">星轨汇聚 · 好运正在靠近</p>
+    <div class="wheel-wrap" id="wheel-wrap">
+      <div class="sparkles" id="wheel-sparkles" aria-hidden="true"></div>
+      <div class="pointer" aria-hidden="true"><i></i></div>
+      <div class="wheel" id="wheel"><canvas class="wheel-canvas" id="wheel-canvas" aria-label="包含十七种秋招去向的幸运转盘"></canvas></div>
+    </div>
+    <button class="primary-button spin-button" id="spin-button"><span>✦</span><label>开始抽取</label><b>→</b></button>
+    <p class="tiny-note"><i></i> 十七种可能，每一种都通往更好的你</p>
+  </section>
+
+  <section class="screen result-screen" id="result-screen" aria-hidden="true">
+    <div class="sparkles burst" id="result-sparkles" aria-hidden="true"></div>
+    <p class="eyebrow">YOUR STELLAR OFFER</p>
+    <h2>你的 Offer 星辰签</h2>
+    <article class="result-card">
+      <div class="card-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p class="result-label">THE STARS HAVE SPOKEN</p>
+      <div class="constellation" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <h3 id="result-name"></h3>
+      <div class="divider"><i>✦</i></div>
+      <p class="blessing" id="blessing"></p>
+      <p class="wish-memory" id="wish-memory"></p>
+      <div class="lucky-code" id="lucky-code"></div>
+    </article>
+    <div class="result-actions">
+      <button class="secondary-button" id="reset-button">↻ 再次许愿</button>
+      <button class="primary-button" id="share-button">分享星辰签 <b>↗</b></button>
+    </div>
+    <p class="screenshot-tip">长按或截图，把这份好运留在相册里</p>
+  </section>
+
+  <footer class="terminal-egg" aria-label="程序员彩蛋">
+    <div><i></i><i></i><i></i><span>offer-service.yml</span></div>
+    <pre><b>Offer Service:</b> v1.0
+<b>Wish Request:</b> <em>SUCCESS</em>
+<b>Luck Level:</b> <em>MAX</em>
+<b>Offer Message:</b> <em>Delivered ✓</em></pre>
+  </footer>
+  <div class="toast" id="toast" role="status" hidden></div>
+</main>
+<script>
+(() => {
+  const prizes = ['字节跳动','阿里巴巴','腾讯','淘天集团','京东','美团','滴滴','快手','网易','大疆','华为','小米','迅雷','研究所','银行','外企','隐藏Offer'];
+  const blessings = [
+    ['愿你的努力被看见，','愿你的秋招一路绿灯，','愿未来收到属于你的 Offer。'],
+    ['愿每一次投递都有回音，','每一场面试都闪闪发光，','最好的 Offer 正向你奔来。'],
+    ['愿你代码无 Bug，面试有底气，','选择比焦虑更多，','在喜欢的地方做热爱的事。'],
+    ['愿这一路的坚持不被辜负，','愿惊喜比预期更早抵达，','愿你稳稳接住属于自己的星光。']
+  ];
+  const loadingCopy = ['正在发送你的愿望...','星辰正在捕获你的 Offer 信号...','Offer 轨迹已生成'];
+  const $ = id => document.getElementById(id);
+  const screens = { welcome:$('welcome-screen'), wishing:$('wishing-screen'), wheel:$('wheel-screen'), result:$('result-screen') };
+  const app = $('app'), wishInput = $('wish'), wheel = $('wheel'), spinButton = $('spin-button');
+  let stage = 'welcome', wish = '', result = '', spinning = false, rotation = 0, timers = [], toastTimer;
+
+  function buildSky() {
+    const sky = $('sky');
+    for (let i=0;i<74;i++) {
+      const star=document.createElement('i'); star.className='star';
+      star.style.cssText=`left:${(i*37.7)%100}%;top:${(i*61.3)%100}%;width:${1+(i%3)*.55}px;height:${1+(i%3)*.55}px;animation-delay:${(i%11)*.32}s;animation-duration:${2.1+(i%7)*.4}s`;
+      sky.appendChild(star);
+    }
+    [[$('wheel-sparkles'),14],[$('result-sparkles'),28]].forEach(([root,count]) => {
+      for(let i=0;i<count;i++){const s=document.createElement('i');s.style.setProperty('--i',i);root.appendChild(s)}
+    });
+  }
+
+  function drawWheel() {
+    const canvas=$('wheel-canvas'), ctx=canvas.getContext('2d'), size=720, center=size/2, radius=337, arc=Math.PI*2/prizes.length;
+    canvas.width=size; canvas.height=size;
+    ctx.save();ctx.shadowColor='rgba(142,107,255,.65)';ctx.shadowBlur=28;ctx.beginPath();ctx.arc(center,center,radius+3,0,Math.PI*2);ctx.fillStyle='#17113c';ctx.fill();ctx.restore();
+    prizes.forEach((prize,i)=>{
+      const start=-Math.PI/2+i*arc,end=start+arc;
+      ctx.beginPath();ctx.moveTo(center,center);ctx.arc(center,center,radius,start,end);ctx.closePath();ctx.fillStyle=i%2===0?'#372263':'#23194d';ctx.fill();ctx.strokeStyle='rgba(238,211,139,.28)';ctx.lineWidth=2;ctx.stroke();
+      ctx.save();ctx.translate(center,center);ctx.rotate(start+arc/2);ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillStyle=i===prizes.length-1?'#ffe6a6':'#f7f2ff';ctx.font=`600 ${prize.length>4?23:27}px -apple-system,BlinkMacSystemFont,sans-serif`;ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=3;ctx.fillText(prize,radius-31,0);ctx.restore();
+    });
+    ctx.beginPath();ctx.arc(center,center,78,0,Math.PI*2);const g=ctx.createRadialGradient(center-16,center-18,5,center,center,78);g.addColorStop(0,'#fff7d3');g.addColorStop(.28,'#f5ca68');g.addColorStop(1,'#9e6427');ctx.fillStyle=g;ctx.shadowColor='rgba(255,214,117,.55)';ctx.shadowBlur=22;ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2b174c';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='800 25px -apple-system,BlinkMacSystemFont,sans-serif';ctx.fillText('OFFER',center,center-7);ctx.font='600 17px -apple-system,BlinkMacSystemFont,sans-serif';ctx.fillText('降临',center,center+22);
+  }
+
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+  function showStage(next){stage=next;app.className=`app stage-${next}`;Object.entries(screens).forEach(([name,el])=>{el.classList.toggle('active',name===next);el.setAttribute('aria-hidden',String(name!==next))})}
+  function showToast(text){clearTimeout(toastTimer);const t=$('toast');t.textContent=text;t.hidden=false;toastTimer=setTimeout(()=>t.hidden=true,1800)}
+  function setWishStep(i){$('step-index').textContent=`0${i+1} / 03`;$('loading-text').textContent=loadingCopy[i];$('progress-bar').style.width=`${(i+1)*33.34}%`;const copy=$('loading-copy');copy.style.animation='none';requestAnimationFrame(()=>copy.style.animation='copyIn .5s both')}
+
+  wishInput.addEventListener('input',()=>{$('counter').textContent=`${wishInput.value.length}/80`});
+  $('wish-button').addEventListener('click',()=>{
+    wish=wishInput.value.trim();if(!wish){showToast('先写下一个愿望吧 ✦');wishInput.focus();return}
+    clearTimers();$('floating-wish').textContent=`“${wish}”`;setWishStep(0);showStage('wishing');timers.push(setTimeout(()=>setWishStep(1),1050),setTimeout(()=>setWishStep(2),2150),setTimeout(()=>showStage('wheel'),3200));
+  });
+
+  spinButton.addEventListener('click',()=>{
+    if(spinning)return;spinning=true;spinButton.disabled=true;$('wheel-wrap').classList.add('is-spinning');spinButton.querySelector('span').textContent='◌';spinButton.querySelector('label').textContent='星轨运转中...';
+    const picked=Math.floor(Math.random()*prizes.length),arc=Math.PI*2/prizes.length,currentNorm=((rotation%(Math.PI*2))+Math.PI*2)%(Math.PI*2),desired=((-(picked+.5)*arc)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),turns=7+Math.floor(Math.random()*3),delta=((desired-currentNorm+Math.PI*2)%(Math.PI*2))+turns*Math.PI*2,duration=matchMedia('(prefers-reduced-motion: reduce)').matches?650:4700+Math.random()*900;
+    rotation+=delta;wheel.style.transition=`transform ${duration}ms cubic-bezier(.12,.72,.08,1)`;wheel.style.transform=`rotate(${rotation}rad)`;
+    timers.push(setTimeout(()=>{result=prizes[picked];spinning=false;spinButton.disabled=false;$('wheel-wrap').classList.remove('is-spinning');$('result-name').textContent=result;const blessing=blessings[Math.floor(Math.random()*blessings.length)];$('blessing').innerHTML=blessing.map(line=>`<span>${line}</span>`).join('');$('wish-memory').textContent=`愿望存档 · ${wish}`;$('lucky-code').textContent=`LUCKY CODE · ${String(picked+1).padStart(2,'0')}${String(new Date().getDate()).padStart(2,'0')}`;showStage('result')},duration+260));
+  });
+
+  $('reset-button').addEventListener('click',()=>{clearTimers();result='';spinButton.querySelector('span').textContent='✦';spinButton.querySelector('label').textContent='开始抽取';showStage('welcome')});
+  $('share-button').addEventListener('click',async()=>{const text=`🌠 我的 Offer 星辰签：${result}\n我的愿望：${wish}\n愿每一次努力，都有星辰回应。`;try{if(navigator.share)await navigator.share({title:'Offer降临 · 我的星辰签',text});else{await navigator.clipboard.writeText(text);showToast('星辰签文案已复制')}}catch(e){}});
+  buildSky();drawWheel();
+})();
+</script>
+</body>
+</html>
