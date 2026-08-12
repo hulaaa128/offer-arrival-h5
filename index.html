@@ -74,6 +74,7 @@ button { -webkit-tap-highlight-color:transparent; }
 .wheel-wrap::before,.wheel-wrap::after { content:"";position:absolute;border-radius:50%;pointer-events:none }.wheel-wrap::before{inset:-4px;border:1px solid rgba(243,206,114,.52);box-shadow:0 0 24px rgba(150,110,255,.3),inset 0 0 16px rgba(150,110,255,.24)}.wheel-wrap::after{inset:5px;border:1px dotted rgba(255,232,162,.35)}
 .wheel { width:100%;height:100%;will-change:transform }.wheel-canvas { display:block;width:100%;height:100% }.pointer { z-index:5;position:absolute;top:-7px;left:50%;transform:translateX(-50%);width:35px;height:52px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5)); }.pointer::before { content:"";position:absolute;left:4px;right:4px;top:0;height:32px;background:linear-gradient(135deg,#fff3bd,#cd9740);clip-path:polygon(50% 100%,0 0,100% 0); }.pointer i { position:absolute;left:50%;top:-2px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:#fff3bd;box-shadow:0 0 13px var(--gold) }
 .spin-button { max-width:390px;margin-top:12px }.is-spinning .sparkles { opacity:1 }
+.prize-picker { width:100%;max-width:390px;margin-top:12px;padding:12px 13px;border:1px solid rgba(178,153,255,.16);border-radius:13px;background:rgba(14,12,31,.62);display:flex;align-items:center;gap:12px }.prize-picker label{flex:1;color:#938aa8;font-size:11px;white-space:nowrap}.prize-picker label>span{color:var(--gold);margin-right:4px}.prize-picker em{display:block;margin:3px 0 0 16px;color:#5f5870;font:8px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;font-style:normal}.select-shell{width:168px;position:relative}.select-shell select{width:100%;height:38px;appearance:none;-webkit-appearance:none;border:1px solid rgba(242,204,114,.24);border-radius:9px;outline:0;padding:0 30px 0 11px;color:#e8dba8;background:#17132e;font-size:11px;cursor:pointer}.select-shell select:disabled{opacity:.55;cursor:wait}.select-shell i{position:absolute;right:11px;top:50%;translate:0 -55%;color:var(--gold);font-style:normal;pointer-events:none}
 .sparkles { position:absolute;inset:-25px;pointer-events:none;opacity:.28;transition:opacity .3s }.sparkles i { --angle:calc(var(--i) * 25.714deg);position:absolute;left:50%;top:50%;width:4px;height:4px;border-radius:50%;background:var(--gold2);box-shadow:0 0 8px var(--gold);transform:rotate(var(--angle)) translateY(-48vw);animation:spark 1.9s calc(var(--i) * -0.12s) ease-in-out infinite; }.sparkles i:nth-child(3n){background:#b49cff}.sparkles i:nth-child(4n){width:2px;height:9px;border-radius:2px}
 @keyframes spark{0%,100%{opacity:.1;scale:.5}45%{opacity:1;scale:1.5}}
 .result-screen { justify-content:flex-start;padding-top:24px }.result-screen>h2 { font-family:Georgia,"Songti SC",serif;font-weight:500;font-size:28px;margin-bottom:19px }.result-card { width:100%;padding:26px 20px 20px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(240,207,124,.42);background:radial-gradient(circle at 50% 12%,rgba(112,76,173,.36),transparent 35%),linear-gradient(160deg,rgba(31,24,59,.97),rgba(10,10,25,.97));box-shadow:0 22px 80px rgba(0,0,0,.35),inset 0 0 40px rgba(132,90,203,.08) }
@@ -140,6 +141,10 @@ button { -webkit-tap-highlight-color:transparent; }
       <div class="wheel" id="wheel"><canvas class="wheel-canvas" id="wheel-canvas" aria-label="包含十七种秋招去向的幸运转盘"></canvas></div>
     </div>
     <button class="primary-button spin-button" id="spin-button"><span>✦</span><label>开始抽取</label><b>→</b></button>
+    <div class="prize-picker">
+      <label for="forced-prize"><span>⌁</span> 指定 Offer <em>测试模式</em></label>
+      <div class="select-shell"><select id="forced-prize"><option value="">随机抽取（默认）</option></select><i>⌄</i></div>
+    </div>
     <p class="tiny-note"><i></i> 十七种可能，每一种都通往更好的你</p>
   </section>
 
@@ -214,6 +219,11 @@ button { -webkit-tap-highlight-color:transparent; }
     ctx.beginPath();ctx.arc(center,center,78,0,Math.PI*2);const g=ctx.createRadialGradient(center-16,center-18,5,center,center,78);g.addColorStop(0,'#fff7d3');g.addColorStop(.28,'#f5ca68');g.addColorStop(1,'#9e6427');ctx.fillStyle=g;ctx.shadowColor='rgba(255,214,117,.55)';ctx.shadowBlur=22;ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#2b174c';ctx.textAlign='center';ctx.textBaseline='middle';ctx.font='800 25px -apple-system,BlinkMacSystemFont,sans-serif';ctx.fillText('OFFER',center,center-7);ctx.font='600 17px -apple-system,BlinkMacSystemFont,sans-serif';ctx.fillText('降临',center,center+22);
   }
 
+  function buildPrizePicker() {
+    const select=$('forced-prize');
+    prizes.forEach(prize=>{const option=document.createElement('option');option.value=prize;option.textContent=prize;select.appendChild(option)});
+  }
+
   function clearTimers(){timers.forEach(clearTimeout);timers=[]}
   function showStage(next){stage=next;app.className=`app stage-${next}`;Object.entries(screens).forEach(([name,el])=>{el.classList.toggle('active',name===next);el.setAttribute('aria-hidden',String(name!==next))})}
   function showToast(text){clearTimeout(toastTimer);const t=$('toast');t.textContent=text;t.hidden=false;toastTimer=setTimeout(()=>t.hidden=true,1800)}
@@ -227,14 +237,14 @@ button { -webkit-tap-highlight-color:transparent; }
 
   spinButton.addEventListener('click',()=>{
     if(spinning)return;spinning=true;spinButton.disabled=true;$('wheel-wrap').classList.add('is-spinning');spinButton.querySelector('span').textContent='◌';spinButton.querySelector('label').textContent='星轨运转中...';
-    const picked=Math.floor(Math.random()*prizes.length),arc=Math.PI*2/prizes.length,currentNorm=((rotation%(Math.PI*2))+Math.PI*2)%(Math.PI*2),desired=((-(picked+.5)*arc)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),turns=7+Math.floor(Math.random()*3),delta=((desired-currentNorm+Math.PI*2)%(Math.PI*2))+turns*Math.PI*2,duration=matchMedia('(prefers-reduced-motion: reduce)').matches?650:4700+Math.random()*900;
+    $('forced-prize').disabled=true;const forced=$('forced-prize').value,picked=forced?prizes.indexOf(forced):Math.floor(Math.random()*prizes.length),arc=Math.PI*2/prizes.length,currentNorm=((rotation%(Math.PI*2))+Math.PI*2)%(Math.PI*2),desired=((-(picked+.5)*arc)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),turns=7+Math.floor(Math.random()*3),delta=((desired-currentNorm+Math.PI*2)%(Math.PI*2))+turns*Math.PI*2,duration=matchMedia('(prefers-reduced-motion: reduce)').matches?650:4700+Math.random()*900;
     rotation+=delta;wheel.style.transition=`transform ${duration}ms cubic-bezier(.12,.72,.08,1)`;wheel.style.transform=`rotate(${rotation}rad)`;
-    timers.push(setTimeout(()=>{result=prizes[picked];spinning=false;spinButton.disabled=false;$('wheel-wrap').classList.remove('is-spinning');$('result-name').textContent=result;const logo=$('company-logo'),image=$('logo-image'),fallback=$('logo-fallback');logo.className=`company-logo brand-${picked}`;if(brandLogos[result]){image.src=brandLogos[result];image.alt=`${result} Logo`;image.hidden=false;fallback.hidden=true}else{image.hidden=true;image.removeAttribute('src');image.alt='';fallback.textContent=categoryMarks[result];fallback.hidden=false}const blessing=blessings[Math.floor(Math.random()*blessings.length)];$('blessing').innerHTML=blessing.map(line=>`<span>${line}</span>`).join('');$('wish-memory').textContent=`愿望存档 · ${wish}`;$('lucky-code').textContent=`LUCKY CODE · ${String(picked+1).padStart(2,'0')}${String(new Date().getDate()).padStart(2,'0')}`;showStage('result')},duration+260));
+    timers.push(setTimeout(()=>{result=prizes[picked];spinning=false;spinButton.disabled=false;$('forced-prize').disabled=false;$('wheel-wrap').classList.remove('is-spinning');$('result-name').textContent=result;const logo=$('company-logo'),image=$('logo-image'),fallback=$('logo-fallback');logo.className=`company-logo brand-${picked}`;if(brandLogos[result]){image.src=brandLogos[result];image.alt=`${result} Logo`;image.hidden=false;fallback.hidden=true}else{image.hidden=true;image.removeAttribute('src');image.alt='';fallback.textContent=categoryMarks[result];fallback.hidden=false}const blessing=blessings[Math.floor(Math.random()*blessings.length)];$('blessing').innerHTML=blessing.map(line=>`<span>${line}</span>`).join('');$('wish-memory').textContent=`愿望存档 · ${wish}`;$('lucky-code').textContent=`LUCKY CODE · ${String(picked+1).padStart(2,'0')}${String(new Date().getDate()).padStart(2,'0')}`;showStage('result')},duration+260));
   });
 
   $('reset-button').addEventListener('click',()=>{clearTimers();result='';spinButton.querySelector('span').textContent='✦';spinButton.querySelector('label').textContent='开始抽取';showStage('welcome')});
   $('share-button').addEventListener('click',async()=>{const text=`🌠 我的 Offer 星辰签：${result}\n我的愿望：${wish}\n愿每一次努力，都有星辰回应。`;try{if(navigator.share)await navigator.share({title:'Offer降临 · 我的星辰签',text});else{await navigator.clipboard.writeText(text);showToast('星辰签文案已复制')}}catch(e){}});
-  buildSky();drawWheel();
+  buildSky();drawWheel();buildPrizePicker();
 })();
 </script>
 </body>
